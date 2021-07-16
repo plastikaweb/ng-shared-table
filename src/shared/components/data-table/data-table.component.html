@@ -1,0 +1,22 @@
+<ngx-datatable class="material expandable" [class.table-shadow]="shadowed" [rowClass]="getRowClassSelectable" [rows]="data"
+  [selected]="selected" [loadingIndicator]="loadingIndicator" [columnMode]="columnMode" [headerHeight]="headerHeight"
+  [footerHeight]="footerHeight" [rowHeight]="rowHeight && rowHeight > 0 ? rowHeight : 'auto'" [reorderable]="reorderable"
+  [sorts]="sorts" [count]="data ? data.length : 0" [selectionType]="selectionType" (select)="onSelect($event)"
+  (mouseup)="onMouseSelect($event)" [scrollbarV]="rowHeight != 0" [scrollbarH]="scrollbarH" [messages]="getMessage()">
+  <ngx-datatable-column *ngFor="let field of schema" [minWidth]="field.colWidth ? field.colWidth : ''" [flexGrow]="field.flexGrow ? field.flexGrow : ''"
+     [name]="field.name" [prop]="field.prop" [comparator]="field.comparator">
+    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+      <div fxLayout="row" fxLayoutAlign="none center" fxLayoutGap="10px">
+        <h4 [class]="field.class" *ngIf="selectFieldValue(row, field.prop) as value" [innerHTML]="value" (mouseup)="markItem($event, row)"></h4>
+        <div *ngIf="field.icons as icons">
+          <mat-icon *ngFor="let i of selectFieldValue(row, icons)" [innerHTML]="i.icon" [matTooltip]="i.text" class="{{i.class}} mat-icon material-icons"></mat-icon>
+        </div>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-footer *ngIf="footerHeight">
+    <ng-template ngx-datatable-footer-template>
+      <ng-content></ng-content>
+    </ng-template>
+  </ngx-datatable-footer>
+</ngx-datatable>

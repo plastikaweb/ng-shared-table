@@ -1,10 +1,19 @@
 import { Component } from '@angular/core';
 
+import { of } from 'rxjs';
+
+import { tableData, tableDefinition } from './table-data';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  title = 'ng-shared-table';
+  searchResults$ = of(tableData);
+  dataTableBuilder$ = of(tableDefinition);
+
+  selectSearchItem(item: any) {
+    console.log(item)
+  }
 }
